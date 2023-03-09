@@ -16,27 +16,21 @@ sudo echo "script kan verder gaan ..."
 echo '
 Controleren op noodzakelijke toepassingen ...
 '
+sleep 3
 
 sudo apt-get install git ansible -y > /dev/null &
 
-# Display spinning during install of packages
-pid=$! # Process Id of the previous running command
+PID=$! #simulate a long process
 
-spin='-\|/'
-
-i=0
-while kill -0 $pid 2>/dev/null
-do
-  i=$(( (i+1) %4 ))
-  printf "\r${spin:$i:1}"
-  sleep .1
+echo -e " Even geduld dit kan even duren... \n Alle noodzakelijke toepassingen worden nu geïnstalleerd \n"
+printf "Voortgang > "
+# While process is running...
+while kill -0 $PID 2> /dev/null; do 
+    printf  "▓"
+    sleep 1
 done
+printf " > Klaar! \n"
 
-echo '
-
-Klaar!
-
-'
 
 DIRECTORY=/home/$USER/DEVOPS_PROJ
 
