@@ -20,7 +20,7 @@ sleep 3
 
 sudo apt-get install git ansible -y > /dev/null &
 
-PID=$! #simulate a long process
+PID=$! #Get process ID from latest command
 
 echo -e " Even geduld dit kan even duren... \n Alle noodzakelijke toepassingen worden nu geïnstalleerd \n"
 printf "Voortgang > "
@@ -31,6 +31,19 @@ while kill -0 $PID 2> /dev/null; do
 done
 printf " > Klaar! \n"
 
+#check if terraform was installed
+check_terraform () {
+    command
+    if [ -command $(which terraform) = "/snap/bin/terraform" ]; then
+        return '1'
+    fi
+}
+
+
+if [ -v check_terraform ]; then
+    echo "Terraform wordt geïnstalleerd"
+    sudo snap install terraform --classic
+fi
 
 DIRECTORY=/home/$USER/DEVOPS_PROJ
 
