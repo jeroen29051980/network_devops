@@ -48,3 +48,10 @@ fi } &> /dev/null
 
 echo -e " Het script gaat nu verder met het opzetten van de virtuele machines \n "
 echo "Opgelet: Momenteel werkt dit script enkel met Oracle Cloud Infrastructure"
+
+# Creatie tijdelijke ssh-sleutel voor gebruik tijdens script
+# /tmp/sshkey en /tmp/sshkey.pub
+ssh-keygen -b 2048 -t rsa -f /tmp/sshkey -q -N "" 
+
+
+

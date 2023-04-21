@@ -1,13 +1,13 @@
 variable "tenancy_ocid" {
   type        = string
   description = "The tenancy OCID"
-  default     = "$OCI_tentant_input"
+  default     = "$OCI_tenant_input"
 }
 
 variable "user_ocid" {
   type        = string
   description = "The user OCID"
-  default     = "$OCI_tentant_input"
+  default     = "$OCI_user_input"
 }
 
 variable "vm_shape" {
@@ -36,11 +36,11 @@ resource "oci_core_vcn" "vcn" {
 
 
 # allow inbound port TCP 22 + TCP 80 + TCP 443 and EVERYTHING outbound
-resource "oci_core_security_list" "TerraformedVM" {
+resource "oci_core_security_list" "Main_VM" {
   #Required
   compartment_id = var.tenancy_ocid
   vcn_id         = oci_core_vcn.vcn.id
-  display_name   = "TerraformedVM"
+  display_name   = "Main_VM"
   ingress_security_rules {
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
@@ -100,26 +100,26 @@ resource "oci_core_subnet" "subnet" {
   vcn_id              = oci_core_vcn.vcn.id
   route_table_id      = oci_core_route_table.internet.id
   security_list_ids = [
-    oci_core_security_list.TerraformedVM.id
+    oci_core_security_list.Main_VM.id
   ]
 }
 
-data "oci_core_images" "centos" {
+data "oci_core_images" "ubuntu" {
   compartment_id           = var.tenancy_ocid
-  operating_system         = "CentOS"
-  operating_system_version = "8 Stream"
+  operating_system         = "Canonical"
+  operating_system_version = "Ubuntu 22.04"
   shape                    = var.vm_shape
 }
 
-resource "oci_core_instance" "TerraformedVM" {
+resource "oci_core_instance" "Main_VM" {
   availability_domain = data.oci_identity_availability_domains.availability_domains.availability_domains.0.name
   compartment_id      = var.tenancy_ocid
-  display_name        = "TerraformedVM"
+  display_name        = "Main_VM"
   shape               = var.vm_shape
 
   source_details {
     source_type = "image"
-    source_id   = data.oci_core_images.centos.images.0.id
+    source_id   = data.oci_core_images.ubuntu.images.0.id
   }
 
   create_vnic_details {
@@ -129,6 +129,6 @@ resource "oci_core_instance" "TerraformedVM" {
 
   # Add SSH key
   extended_metadata = {
-    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+    ssh_authorized_keys = file("/tmp/sshkey.pub")
   }
 }

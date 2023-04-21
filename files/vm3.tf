@@ -36,11 +36,11 @@ resource "oci_core_vcn" "vcn" {
 
 
 # allow inbound port TCP 22 + TCP 80 + TCP 443 and EVERYTHING outbound
-resource "oci_core_security_list" "TerraformedVM" {
+resource "oci_core_security_list" "BACKUP_VM" {
   #Required
   compartment_id = var.tenancy_ocid
   vcn_id         = oci_core_vcn.vcn.id
-  display_name   = "TerraformedVM"
+  display_name   = "BACKUP_VM"
   ingress_security_rules {
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
@@ -100,7 +100,7 @@ resource "oci_core_subnet" "subnet" {
   vcn_id              = oci_core_vcn.vcn.id
   route_table_id      = oci_core_route_table.internet.id
   security_list_ids = [
-    oci_core_security_list.TerraformedVM.id
+    oci_core_security_list.BACKUP_VM.id
   ]
 }
 
@@ -111,10 +111,10 @@ data "oci_core_images" "centos" {
   shape                    = var.vm_shape
 }
 
-resource "oci_core_instance" "TerraformedVM" {
+resource "oci_core_instance" "BACKUP_VM" {
   availability_domain = data.oci_identity_availability_domains.availability_domains.availability_domains.0.name
   compartment_id      = var.tenancy_ocid
-  display_name        = "TerraformedVM"
+  display_name        = "BACKUP_VM"
   shape               = var.vm_shape
 
   source_details {
