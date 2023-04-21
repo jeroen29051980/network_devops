@@ -104,10 +104,10 @@ resource "oci_core_subnet" "subnet" {
   ]
 }
 
-data "oci_core_images" "centos" {
+data "oci_core_images" "ubuntu" {
   compartment_id           = var.tenancy_ocid
-  operating_system         = "CentOS"
-  operating_system_version = "8 Stream"
+  operating_system         = "Canonical"
+  operating_system_version = "Ubuntu 22.04"
   shape                    = var.vm_shape
 }
 

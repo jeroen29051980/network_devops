@@ -13,7 +13,7 @@ variable "user_ocid" {
 variable "vm_shape" {
   type        = string
   description = "The shape of the VM"
-  default     = "VM.Standard.E2.1.Micro"
+  default     = "VM.Standard.E2.1"
 }
 
 provider "oci" {
