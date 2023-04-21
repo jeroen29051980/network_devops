@@ -57,4 +57,4 @@ if [ ! -d "$DIRECTORY" ]; then
 fi } &> /dev/null
 
 echo -e " Het script gaat nu verder met het opzetten van de virtuele machines \n "
-echo "Opgelet: Momenteel werkt dit script enkel met 
+echo "Opgelet: Momenteel werkt dit script enkel met Oracle Cloud Infrastructure"
