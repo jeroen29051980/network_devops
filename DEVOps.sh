@@ -31,17 +31,7 @@ while kill -0 $PID 2> /dev/null; do
 done
 printf " > Klaar! \n"
 
-#check if terraform was installed
-check_terraform () {
-    command
-    if [ -command $(which terraform) = "/snap/bin/terraform" ]; then
-        return '1'
-    fi
-}
-
-
-if [ -v check_terraform ]; then
-    echo "Terraform wordt geïnstalleerd"
+if [ -command $(which terraform) != "/snap/bin/terraform" ]; then
     sudo snap install terraform --classic
 fi
 
