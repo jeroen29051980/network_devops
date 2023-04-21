@@ -56,5 +56,5 @@ if [ ! -d "$DIRECTORY" ]; then
   git clone https://github.com/jeroen29051980/DEVOPS_PROJ.git /home/$USER/DEVOPS_PROJ
 fi } &> /dev/null
 
-echo -e "Het script gaat nu verder met het opzetten van de virtuele machines \n"
+echo -e " Het script gaat nu verder met het opzetten van de virtuele machines \n "
 echo "Opgelet: Momenteel werkt dit script enkel met 
