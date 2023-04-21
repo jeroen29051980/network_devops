@@ -53,5 +53,49 @@ echo "Opgelet: Momenteel werkt dit script enkel met Oracle Cloud Infrastructure"
 # /tmp/sshkey en /tmp/sshkey.pub
 ssh-keygen -b 2048 -t rsa -f /tmp/sshkey -q -N "" 
 
+# Ingave door de gebruiker van de noodzakelijke gegevens voor de uitrol van de VM's op andere systemen
+# De gebruiker dient tevens een bestand te voorzien op de home-folder met de naam OCI.pem
+# Bestand is de private-sleutel voor verbinding met Oracle Cloud infrastructure
 
+echo '
+Geef hieronder de benodigde gegevens voor de verbinding met Oracle
+Tevens is het nodig dat de private sleutel (OCI.pem) zich in de root van home bevindt 
+**************************************************************************************
+'
+OCI=/home/$USER/OCI.pem
+
+if [ -f "$OCI" ];
+then
+  echo "Geef de user-ID (OCI_ID): "
+  read OCI_user_input
+  export OCI_user_input
+  echo -e " \n Geef de tenant-ID (OCI_ID): "
+  read OCI_tenant_input
+  export OCI_tenant_input
+  echo -e " \n Geef de fingerprint-ID: "
+  read OCI_fingerprint_input
+  export OCI_fingerprint_input
+  sudo cp /home/$USER/OCI.pem /home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem
+else
+  echo "Het benodigde bestand OCI.pem werkt niet"
+  echo "Corrigeer de fout en herstart dit script met DEVOps.sh"
+  exit 1 
+fi
+
+counter=0
+
+# Terraform deploy voor de 3 VM naar Oracle Cloud Infrastructure
+
+echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
+envsubst </home/$USER/DEVOPS_PROJ/files/vm1.tf >/home/$USER/DEVOPS_PROJ/wip.tf
+terraform init 2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
+terraform plan 2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
+terraform apply 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( ctr+=1 )).txt
+rm wip.tf
+envsubst </home/$USER/DEVOPS_PROJ/files/vm2.tf >/home/$USER/DEVOPS_PROJ/wip.tf
+terraform apply 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( ctr+=1 )).txt
+rm wip.tf
+envsubst </home/$USER/DEVOPS_PROJ/files/vm3.tf >/home/$USER/DEVOPS_PROJ/wip.tf
+terraform apply 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( ctr+=1 )).txt
+rm wip.tf
 
