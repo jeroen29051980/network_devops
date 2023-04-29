@@ -11,7 +11,7 @@ variable "user_ocid" {
 }
 
 variable "vm_shape" {
-  type        = string
+  type        = stringnan
   description = "The shape of the VM"
   default     = "VM.Standard.E2.1"
 }
