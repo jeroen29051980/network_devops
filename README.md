@@ -39,7 +39,9 @@ TD: opzetten VM'S op Oracle Cloud met terraform en eventuele HA voor 2 machines 
 
     - Terraform-script voor het opzetten van 3 VM's werd gemaakt aan de van de documentatie van de docent.
 
-    - Testing wordt momenteel uitgevoerd (29/04/2023) > nog niet succesvol.
+    - Testing wordt momenteel uitgevoerd (29/04/2023) > succesvolle test met hardcoded variabelen
+
+    Laatste wijzigingen werden gepushed onder commentaar "Testing Hardcoded final"
 
 TD: configureren van de playbooks
 

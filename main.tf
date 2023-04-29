@@ -1,13 +1,13 @@
 variable "tenancy_ocid" {
   type        = string
   description = "The tenancy OCID"
-  default     = "$OCI_tenant_input"
+  default     = "ocid1.tenancy.oc1..aaaaaaaaqh23tupwfbofw6ueekpbjqvstsjs2guugaixvfbyszi7m2jifaeq"
 }
 
 variable "user_ocid" {
   type        = string
   description = "The user OCID"
-  default     = "$OCI_user_input"
+  default     = "ocid1.user.oc1..aaaaaaaanrqlbsqu36eaqldcpfp5guuo2wbqersdeqsfkkxt7yc73kof2d3a"
 }
 
 variable "vm_shape" {
@@ -27,9 +27,19 @@ locals {
 provider "oci" {
   tenancy_ocid     = var.tenancy_ocid
   user_ocid        = var.user_ocid
-  fingerprint      = "$OCI_fingerprint_input"
-  private_key_path = "/home/$USER/DEVOPS_PROJ/files/KEYS/oci.pem"
+  fingerprint      = "52:5d:08:ce:82:b4:25:2b:27:02:6d:e7:db:4f:7e:7e"
+  private_key_path = "/home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem"
   region           = "eu-amsterdam-1"
+}
+
+
+terraform {
+  required_providers {
+    oci = {
+      source  = "oracle/oci"
+      version = ">= 4.0.0"
+    }
+  }
 }
 
 data "oci_identity_availability_domains" "availability_domains" {
@@ -114,13 +124,18 @@ resource "oci_core_subnet" "subnet" {
 
 data "oci_core_images" "ubuntu" {
   compartment_id           = var.tenancy_ocid
-  operating_system         = "Canonical"
-  operating_system_version = "Ubuntu 22.04"
+  operating_system         = "Canonical Ubuntu"
+  operating_system_version = "22.04"
   shape                    = var.vm_shape
 }
 
 resource "oci_core_instance" "TerraformedVM" {
   for_each = local.instances
+
+  availability_domain = data.oci_identity_availability_domains.availability_domains.availability_domains.0.name
+  compartment_id      = var.tenancy_ocid
+  display_name        = each.value
+  shape               = var.vm_shape
 
   source_details {
     source_type = "image"
@@ -144,7 +159,7 @@ resource "time_sleep" "wait" {
 }
 
 resource "null_resource" "generate-inventory" {
-
+  for_each = local.instances
   provisioner "local-exec" {
     command = <<-EOT
       echo [New-Servers] >> inventory
