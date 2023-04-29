@@ -1,0 +1,15 @@
+---
+- name: Cronjob to BackupVM
+  hosts: DataVM
+  become: yes
+  tasks:
+  - name: Run a command and register its output as a variable
+    debug: var=hostvars[inventory_hostname]['ansible_default_ipv4']['address']
+    register: ip_address
+    ignore_errors: true
+  - name: Create a task to run every day at 22u to copy the nextcloud data-folder to the backup-VM
+    cron:
+      name: "Setup stand-alone backup-task (Mirror)"
+      minute: "0"
+      hour: "22"
+      job: "rsync -ahvAE --delete /nc_data ubuntu@{{ ip_address }}:/nc_data_backup "
