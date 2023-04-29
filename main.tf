@@ -124,7 +124,7 @@ resource "oci_core_instance" "TerraformedVM" {
 
   source_details {
     source_type = "image"
-    source_id   = data.oci_core_images.centos.images.0.id
+    source_id   = data.oci_core_images.ubuntu.images.0.id
   }
 
   create_vnic_details {
