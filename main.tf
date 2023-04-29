@@ -134,11 +134,11 @@ resource "oci_core_instance" "TerraformedVM" {
 
   # Add SSH key
   extended_metadata = {
-    ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
+    ssh_authorized_keys = file("/tmp/sshkey.pub")
   }
 }
 
-resource "time_sleep" "wait {
+resource "time_sleep" "wait" {
   depends_on = [oci_core_instance.TerraformedVM]
   create_duration   = "60s"
 }
