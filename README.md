@@ -40,7 +40,7 @@ DONE: opzetten van ansible-configuratie op de host-machine met remote configurat
 
     - Wordt verwezenlijkt door 'provisioner' in Terraform script
 
-TD: opzetten VM'S op Oracle Cloud met terraform en eventuele HA voor 2 machines met Nextcloud
+TESTING: opzetten VM'S op Oracle Cloud met terraform en eventuele HA voor 2 machines met Nextcloud
 
     - Terraform-script voor het opzetten van 3 VM's werd gemaakt aan de van de documentatie van de docent.
 
@@ -48,8 +48,7 @@ TD: opzetten VM'S op Oracle Cloud met terraform en eventuele HA voor 2 machines 
 
     Laatste wijzigingen werden gepushed onder commentaar "Testing Hardcoded final"
 
-TD: configureren van de playbooks
+IN PROGRESS: configureren van de playbooks - centralisatie gebeurt in install.yaml waar alle playbooks worden aangeroepen.
 
-TD: aanmaken van de diverse configuratiebestanden voor verschillende toepassingen op de client-machines
-
+MAYBE NESCESSARY: aanmaken van de diverse configuratiebestanden voor verschillende toepassingen op de client-machines
 
