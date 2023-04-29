@@ -7,7 +7,7 @@ variable "tenancy_ocid" {
 variable "user_ocid" {
   type        = string
   description = "The user OCID"
-  default     = "$OCI_tentant_input"
+  default     = "$OCI_user_input"
 }
 
 variable "vm_shape" {
