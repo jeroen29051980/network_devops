@@ -133,7 +133,7 @@ resource "oci_core_instance" "Main_VM" {
   }
 }
 
-resource "time_sleep" "wait {
+resource "time_sleep" "wait" {
   depends_on = [oci_core_instance.Main_VM]
   create_duration   = "60s"
 }
@@ -151,7 +151,7 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory install-httpd.yml"
+    command = "ansible-playbook -i inventory install.yml"
   }
   depends_on = [null_resource.generate-inventory]
 }
