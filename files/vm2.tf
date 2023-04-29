@@ -132,3 +132,27 @@ resource "oci_core_instance" "DATA_VM" {
     ssh_authorized_keys = file("~/.ssh/id_rsa.pub")
   }
 }
+
+
+resource "time_sleep" "wait {
+  depends_on = [oci_core_instance.DATA_VM]
+  create_duration   = "60s"
+}
+
+resource "null_resource" "generate-inventory" {
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo [New-Servers] >> inventory
+      echo ${oci_core_instance.DATA_VM.display_name} ansible_host=${oci_core_instance.DATA_VM.public_ip} ansible_user=opc ansible_ssh_private_key_file=/tmp/sshkey >> inventory
+    EOT
+  }
+  depends_on = [time_sleep.wait]
+}
+resource "null_resource" "execute-playbook" {
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inventory install-httpd.yml"
+  }
+  depends_on = [null_resource.generate-inventory]
+}

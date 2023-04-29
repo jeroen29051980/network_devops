@@ -99,5 +99,6 @@ envsubst < /home/$USER/DEVOPS_PROJ/files/vm3.tf > /home/$USER/DEVOPS_PROJ/wip.tf
 terraform apply 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
 rm wip.tf
 
-
+# Tijdelijke comment tot wanneer het ansible script werk.
+# ansible-playbook /home/$USER/DEVOPS_PROJ/playbook/install.yaml
 
