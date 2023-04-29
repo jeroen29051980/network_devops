@@ -100,17 +100,10 @@ fi } &> /dev/null
 cd /home/$USER/DEVOPS_PROJ/
 
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
-envsubst </home/$USER/DEVOPS_PROJ/files/vm1.tf > /home/$USER/DEVOPS_PROJ/wip.tf
+envsubst </home/$USER/DEVOPS_PROJ/main.tf >/home/$USER/DEVOPS_PROJ/main.tf
 terraform init #2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
 terraform plan #2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
 terraform apply #> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
-rm wip.tf
-envsubst < /home/$USER/DEVOPS_PROJ/files/vm2.tf > /home/$USER/DEVOPS_PROJ/wip.tf
-terraform apply #2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
-rm wip.tf
-envsubst < /home/$USER/DEVOPS_PROJ/files/vm3.tf > /home/$USER/DEVOPS_PROJ/wip.tf
-terraform apply #2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
-rm wip.tf
 
 # Tijdelijke comment tot wanneer het ansible script werk.
 # ansible-playbook /home/$USER/DEVOPS_PROJ/playbook/install.yaml
