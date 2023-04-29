@@ -1,0 +1,33 @@
+---
+- name: Install UFW Firewall
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Outgoing allow
+      community.general.ufw:
+        state: enabled
+        direction: outgoing
+        policy: allow
+    - name: Incoming deny
+      community.general.ufw:
+        state: enabled
+        direction: incoming
+        policy: deny
+    - name: Allow SSH
+      ufw:
+        rule: allow
+        port: 22
+        proto: tcp
+    - name: Allow HTTP
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+    - name: Allow HTTPS
+      ufw:
+        rule: allow
+        port: 443
+        proto: tcp
+    - name: Enable ufw
+      community.general.ufw:
+        state: enabled
