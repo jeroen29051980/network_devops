@@ -7,4 +7,4 @@
   - include_tasks: ufw_Ann.yaml
   - include_tasks: webserver_Ann.yaml
   - include_tasks: samba.yaml
-  
+  - include tasks: backup2VM.yaml  
