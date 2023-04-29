@@ -64,6 +64,19 @@ Tevens is het nodig dat de private sleutel (OCI.pem) zich in de root van home be
 '
 OCI=/home/$USER/OCI.pem
 
+DIRECTORY2=/home/$USER/DEVOPS_PROJ/logs
+
+{ if [ -d "$DIRECTORY2" ]; then
+  rm -rf /home/$USER/DEVOPS_PROJ/logs/
+  mkdir /home/$USER/DEVOPS_PROJ/logs/
+  mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
+fi
+
+if [ ! -d "$DIRECTORY2" ]; then
+  mkdir /home/$USER/DEVOPS_PROJ/logs/
+  mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
+fi } &> /dev/null
+
 if [ -f "$OCI" ];
 then
   echo "Geef de user-ID (OCI_ID): "
@@ -85,17 +98,6 @@ fi
 counter=0
 
 # Terraform deploy voor de 3 VM naar Oracle Cloud Infrastructure
-
-DIRECTORY2=/home/$USER/DEVOPS_PROJ/logs
-
-{ if [ -d "$DIRECTORY2" ]; then
-  rm -rf /home/$USER/DEVOPS_PROJ/logs/
-  mkdir /home/$USER/DEVOPS_PROJ/logs/
-fi
-
-if [ ! -d "$DIRECTORY2" ]; then
-  mkdir /home/$USER/DEVOPS_PROJ/logs/
-fi } &> /dev/null
 
 cd /home/$USER/DEVOPS_PROJ/
 
