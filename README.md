@@ -9,6 +9,11 @@ Op voorwaarde dat git geïnstalleerd is op het host-systeem
 
 > git clone https://github.com/jeroen29051980/DEVOPS_PROJ.git && > bash ./DEVOPS_PROJ/DEVOps.sh
 
+Voor de goede werking van dit script is het tevens noodzakelijk dat er een bestand bestaat in de root-folder van de gebruiker \n
+met de naam OCI.pem.
+
+Dit bestand dient de private sleutel te bevatten van Oracle Cloud.
+
 
 Push naar deze repository gebeurt over het algemeen door de eigenaar.  Inhoudelijk blijft dit echter een groepswerk.
 

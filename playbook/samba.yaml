@@ -1,0 +1,28 @@
+---
+- name: Install and configure Samba
+  hosts: DataVM
+  become: yes
+  tasks:
+    - name: Creates directory
+      file:
+      path: /nc_data
+      state: directory
+    - name: Install Samba
+      package:
+      name: samba
+      state: present
+    - name: Create Samba configuration file
+      copy:
+      dest: /etc/samba/smb.conf
+      content: |
+        [global]
+        workgroup = WORKGROUP
+        security = user
+        [share]
+        path = /nc_data
+        read only = no
+        guest ok = yes
+    - name: Restart Samba service
+      service:
+      name: smb
+      state: restarted

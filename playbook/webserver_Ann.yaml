@@ -1,6 +1,6 @@
 --- 
 - name: set up webserver
-  hosts: localhost
+  hosts: MainVM
   become: true
   tasks: 
     - name: ensure nginx is at the latest version

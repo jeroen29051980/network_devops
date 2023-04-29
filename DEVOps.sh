@@ -70,22 +70,24 @@ DIRECTORY2=/home/$USER/DEVOPS_PROJ/logs
   rm -rf /home/$USER/DEVOPS_PROJ/logs/
   mkdir /home/$USER/DEVOPS_PROJ/logs/
   mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
+  cp /home/$USER/DEVOPS_PROJ/*.yaml /home/$USER/DEVOPS_PROJ/
 fi
 
 if [ ! -d "$DIRECTORY2" ]; then
   mkdir /home/$USER/DEVOPS_PROJ/logs/
   mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
+    cp /home/$USER/DEVOPS_PROJ/*.yaml /home/$USER/DEVOPS_PROJ/
 fi } &> /dev/null
 
 if [ -f "$OCI" ];
 then
-  echo "Geef de user-ID (OCI_ID): "
+  echo "Geef de user-ID (OCI_ID):"
   read OCI_user_input
   export OCI_user_input
-  echo -e "\n Geef de tenant-ID (OCI_ID): "
+  echo -e "\n Geef de tenant-ID (OCI_ID):"
   read OCI_tenant_input
   export OCI_tenant_input
-  echo -e "\n Geef de fingerprint-ID: "
+  echo -e "\n Geef de fingerprint-ID:"
   read OCI_fingerprint_input
   export OCI_fingerprint_input
   sudo cp /home/$USER/OCI.pem /home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem
@@ -102,9 +104,9 @@ counter=0
 cd /home/$USER/DEVOPS_PROJ/
 
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
-envsubst </home/$USER/DEVOPS_PROJ/main.tf >/home/$USER/DEVOPS_PROJ/main.tf
-terraform init /home/$USER/DEVOPS_PROJ/main.tf #2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
-terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out #2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
-terraform apply /home/$USER/DEVOPS_PROJ/plan.out #> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
+envsubst </home/$USER/DEVOPS_PROJ/main.tf 2>/home/$USER/DEVOPS_PROJ/main.tf
+terraform init /home/$USER/DEVOPS_PROJ/main.tf 2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
+terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out 2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
+terraform apply /home/$USER/DEVOPS_PROJ/plan.out 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
 
 # Installatie playbook wordt aangeroepen via terraform

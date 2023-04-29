@@ -1,6 +1,6 @@
 ---
 - name: Install UFW Firewall
-  hosts: localhost
+  hosts: MainVM
   become: true
   tasks:
     - name: Outgoing allow
@@ -27,6 +27,26 @@
       ufw:
         rule: allow
         port: 443
+        proto: tcp
+    - name: Allow HTTPS from Nextcloud-container #Toegevoegd om gepubliceerde poorten van Nextcloud door te laten
+      ufw:
+        rule: allow
+        port: 8443
+        proto: tcp
+    - name: Allow HTTP from Nextcloud-container #Toegevoegd om gepubliceerde poorten van Nextcloud door te laten
+      ufw:
+        rule: allow
+        port: 8080
+        proto: tcp
+    - name: Allow Ports for SMB-protocol #Toegevoegd om SAMBA-protocol te faciliteren voor folder op DataVM
+      ufw:
+        rule: allow
+        port: 445
+        proto: tcp
+    - name: Allow Ports for SMB-protocol #Toegevoegd om SAMBA-protocol te faciliteren voor folder op DataVM
+      ufw:
+        rule: allow
+        port: 139
         proto: tcp
     - name: Enable ufw
       community.general.ufw:
