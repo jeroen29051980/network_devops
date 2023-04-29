@@ -105,6 +105,4 @@ terraform init /home/$USER/DEVOPS_PROJ/main.tf #2> home/$USER/DEVOPS_PROJ/logs/T
 terraform plan #2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
 terraform apply /home/$USER/DEVOPS_PROJ/main.tf #> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
 
-# Tijdelijke comment tot wanneer het ansible script werk.
-# ansible-playbook /home/$USER/DEVOPS_PROJ/playbook/install.yaml
-
+# Installatie playbook wordt aangeroepen via terraform
