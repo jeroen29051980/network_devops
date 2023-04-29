@@ -69,10 +69,10 @@ then
   echo "Geef de user-ID (OCI_ID): "
   read OCI_user_input
   export OCI_user_input
-  echo -e " \n Geef de tenant-ID (OCI_ID): "
+  echo -e "\n Geef de tenant-ID (OCI_ID): "
   read OCI_tenant_input
   export OCI_tenant_input
-  echo -e " \n Geef de fingerprint-ID: "
+  echo -e "\n Geef de fingerprint-ID: "
   read OCI_fingerprint_input
   export OCI_fingerprint_input
   sudo cp /home/$USER/OCI.pem /home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem
@@ -86,8 +86,21 @@ counter=0
 
 # Terraform deploy voor de 3 VM naar Oracle Cloud Infrastructure
 
+DIRECTORY2=/home/$USER/DEVOPS_PROJ/logs
+
+{ if [ -d "$DIRECTORY2" ]; then
+  rm -rf /home/$USER/DEVOPS_PROJ/logs/
+  mkdir /home/$USER/DEVOPS_PROJ/logs/
+fi
+
+if [ ! -d "$DIRECTORY2" ]; then
+  mkdir /home/$USER/DEVOPS_PROJ/logs/
+fi } &> /dev/null
+
+cd /home/$USER/DEVOPS_PROJ/
+
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
-envsubst </ home/$USER/DEVOPS_PROJ/files/vm1.tf > /home/$USER/DEVOPS_PROJ/wip.tf
+envsubst </home/$USER/DEVOPS_PROJ/files/vm1.tf > /home/$USER/DEVOPS_PROJ/wip.tf
 terraform init 2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
 terraform plan 2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
 terraform apply 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
