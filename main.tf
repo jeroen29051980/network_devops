@@ -108,7 +108,7 @@ resource "oci_core_subnet" "subnet" {
   vcn_id              = oci_core_vcn.vcn.id
   route_table_id      = oci_core_route_table.internet.id
   security_list_ids = [
-    oci_core_security_list.BACKUP_VM.id
+    oci_core_security_list.TerraformedVM.id
   ]
 }
 
