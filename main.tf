@@ -28,7 +28,7 @@ provider "oci" {
   tenancy_ocid     = var.tenancy_ocid
   user_ocid        = var.user_ocid
   fingerprint      = "52:5d:08:ce:82:b4:25:2b:27:02:6d:e7:db:4f:7e:7e"
-  private_key_path = "/home/jeroen/DEVOPS_PROJ/files/KEYS/OCI.pem"
+  private_key_path = "/home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem"
   region           = "eu-amsterdam-1"
 }
 
@@ -38,15 +38,7 @@ terraform {
     oci = {
       source  = "oracle/oci"
       version = ">= 4.0.0"
-    }  echo "Geef de user-ID (OCI_ID):"
-  read OCI_user_input
-  export OCI_user_input
-  echo -e "\n Geef de tenant-ID (OCI_ID):"
-  read OCI_tenant_input
-  export OCI_tenant_input
-  echo -e "\n Geef de fingerprint-ID:"
-  read OCI_fingerprint_input
-  export OCI_fingerprint_input
+    }
   }
 }
 
@@ -86,20 +78,6 @@ resource "oci_core_security_list" "TerraformedVM" {
       min = 22
     }
   }
-
-  egress_security_rules {
-    destination  = "0.0.0.0/0"
-    protocol    = "all"
-  }
-  ingress_security_rules {
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    protocol    = "6" # TCP
-    tcp_options {
-      max = 8080
-      min = 8080
-    }
-  }
   ingress_security_rules {
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
@@ -107,25 +85,6 @@ resource "oci_core_security_list" "TerraformedVM" {
     tcp_options {
       max = 443
       min = 443
-    }
-  }
-
-  ingress_security_rules {
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    protocol    = "6" # TCP
-    tcp_options {
-      max = 445
-      min = 445
-    }
-  }
-  ingress_security_rules {
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    protocol    = "6" # TCP
-    tcp_options {
-      max = 139
-      min = 139
     }
   }
   egress_security_rules {
@@ -165,8 +124,8 @@ resource "oci_core_subnet" "subnet" {
 
 data "oci_core_images" "ubuntu" {
   compartment_id           = var.tenancy_ocid
-  operating_system         = "Canonical Ubuntu"
-  operating_system_version = "22.04"
+  operating_system         = "Canonical"
+  operating_system_version = "Ubuntu 22.04"
   shape                    = var.vm_shape
 }
 
@@ -212,7 +171,7 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory install.yaml"
+    command = "ansible-playbook -i inventory install-httpd.yml"
   }
   depends_on = [null_resource.generate-inventory]
 }
