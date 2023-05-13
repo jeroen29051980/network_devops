@@ -68,6 +68,8 @@ OCI=/home/$USER/OCI.pem
 
 terraform init /home/$USER/DEVOPS_PROJ/main.tf
 
+mkdir /home/$USER/DEVOPS_PROJ/files/KEYS
+
 if [ -f "$OCI" ];
 then
   sudo cp /home/$USER/OCI.pem /home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem
