@@ -1,4 +1,4 @@
---- 
+---
 - name: set up and deploy docker Nextcloud
   hosts: MainVM
   become: true

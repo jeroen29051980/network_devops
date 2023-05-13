@@ -83,9 +83,54 @@ resource "oci_core_security_list" "TerraformedVM" {
     source_type = "CIDR_BLOCK"
     protocol    = "6" # TCP
     tcp_options {
+      max = 8443
+      min = 8443
+    }
+  }
+  egress_security_rules {
+    destination  = "0.0.0.0/0"
+    protocol    = "all"
+  }
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 8080
+      min = 8080
+    }
+  }
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
       max = 443
       min = 443
     }
+  }
+
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 445
+      min = 445
+    }
+  }
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 139
+      min = 139
+    }
+  }
+  egress_security_rules {
+    destination  = "0.0.0.0/0"
+    protocol    = "all"
   }
   egress_security_rules {
     destination  = "0.0.0.0/0"

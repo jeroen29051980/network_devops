@@ -106,9 +106,8 @@ counter=0
 cd /home/$USER/DEVOPS_PROJ/
 
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
-envsubst </home/$USER/DEVOPS_PROJ/main.tf 2>/home/$USER/DEVOPS_PROJ/main.tf
-terraform init /home/$USER/DEVOPS_PROJ/main.tf 2> home/$USER/DEVOPS_PROJ/logs/TF_init_err.txt
-terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out 2> home/$USER/DEVOPS_PROJ/logs/TF_plan_err.txt
-terraform apply /home/$USER/DEVOPS_PROJ/plan.out 2> home/$USER/DEVOPS_PROJ/logs/TF_apply_err$(( counter+=1 )).txt
-
+envsubst </home/$USER/DEVOPS_PROJ/main.tf
+terraform init /home/$USER/DEVOPS_PROJ/main.tf
+terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out
+terraform apply /home/$USER/DEVOPS_PROJ/plan.out
 # Installatie playbook wordt aangeroepen via terraform
