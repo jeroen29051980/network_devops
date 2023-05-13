@@ -86,7 +86,7 @@ counter=0
 cd /home/$USER/DEVOPS_PROJ/
 
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
-envsubst </home/$USER/DEVOPS_PROJ/main.tf
+#envsubst </home/$USER/DEVOPS_PROJ/main.tf
 terraform init
 terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out
 terraform apply /home/$USER/DEVOPS_PROJ/plan.out

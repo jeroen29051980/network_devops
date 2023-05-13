@@ -86,15 +86,7 @@ resource "oci_core_security_list" "TerraformedVM" {
       min = 22
     }
   }
-  ingress_security_rules {
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    protocol    = "6" # TCP
-    tcp_options {
-      max = 8443
-      min = 8443
-    }
-  }
+
   egress_security_rules {
     destination  = "0.0.0.0/0"
     protocol    = "all"
@@ -135,10 +127,6 @@ resource "oci_core_security_list" "TerraformedVM" {
       max = 139
       min = 139
     }
-  }
-  egress_security_rules {
-    destination  = "0.0.0.0/0"
-    protocol    = "all"
   }
   egress_security_rules {
     destination  = "0.0.0.0/0"
