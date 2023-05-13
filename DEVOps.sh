@@ -80,6 +80,7 @@ if [ ! -d "$DIRECTORY2" ]; then
   mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
     cp /home/$USER/DEVOPS_PROJ/*.yaml /home/$USER/DEVOPS_PROJ/
 fi } &> /dev/null
+terraform init /home/$USER/DEVOPS_PROJ/main.tf
 
 if [ -f "$OCI" ];
 then
@@ -107,7 +108,7 @@ cd /home/$USER/DEVOPS_PROJ/
 
 echo "De benodigde virtuele machines zullen nu aangemaakt worden op basis van je ingebrachte gegevens"
 envsubst </home/$USER/DEVOPS_PROJ/main.tf
-terraform init /home/$USER/DEVOPS_PROJ/main.tf
+terraform init
 terraform plan -out /home/$USER/DEVOPS_PROJ/plan.out
 terraform apply /home/$USER/DEVOPS_PROJ/plan.out
 # Installatie playbook wordt aangeroepen via terraform
