@@ -38,7 +38,15 @@ terraform {
     oci = {
       source  = "oracle/oci"
       version = ">= 4.0.0"
-    }
+    }  echo "Geef de user-ID (OCI_ID):"
+  read OCI_user_input
+  export OCI_user_input
+  echo -e "\n Geef de tenant-ID (OCI_ID):"
+  read OCI_tenant_input
+  export OCI_tenant_input
+  echo -e "\n Geef de fingerprint-ID:"
+  read OCI_fingerprint_input
+  export OCI_fingerprint_input
   }
 }
 
