@@ -11,7 +11,8 @@
       service: 
         name: docker
         state: started
-    -name: deploy docker
+        enabled: true
+    - name: deploy docker
       docker_container:
         name: Nextcloud
         image: nextcloud
