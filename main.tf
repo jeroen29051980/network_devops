@@ -28,7 +28,7 @@ provider "oci" {
   tenancy_ocid     = var.tenancy_ocid
   user_ocid        = var.user_ocid
   fingerprint      = "52:5d:08:ce:82:b4:25:2b:27:02:6d:e7:db:4f:7e:7e"
-  private_key_path = "/home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem"
+  private_key_path = "/home/jeroen/DEVOPS_PROJ/files/KEYS/OCI.pem"
   region           = "eu-amsterdam-1"
 }
 

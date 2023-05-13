@@ -66,33 +66,10 @@ Tevens is het nodig dat de private sleutel (OCI.pem) zich in de root van home be
 '
 OCI=/home/$USER/OCI.pem
 
-DIRECTORY2=/home/$USER/DEVOPS_PROJ/logs
-
-{ if [ -d "$DIRECTORY2" ]; then
-  rm -rf /home/$USER/DEVOPS_PROJ/logs/
-  mkdir /home/$USER/DEVOPS_PROJ/logs/
-  mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
-  cp /home/$USER/DEVOPS_PROJ/*.yaml /home/$USER/DEVOPS_PROJ/
-fi
-
-if [ ! -d "$DIRECTORY2" ]; then
-  mkdir /home/$USER/DEVOPS_PROJ/logs/
-  mkdir /home/$USER/DEVOPS_PROJ/files/KEYS/
-    cp /home/$USER/DEVOPS_PROJ/*.yaml /home/$USER/DEVOPS_PROJ/
-fi } &> /dev/null
 terraform init /home/$USER/DEVOPS_PROJ/main.tf
 
 if [ -f "$OCI" ];
 then
-  echo "Geef de user-ID (OCI_ID):"
-  read OCI_user_input
-  export OCI_user_input
-  echo -e "\n Geef de tenant-ID (OCI_ID):"
-  read OCI_tenant_input
-  export OCI_tenant_input
-  echo -e "\n Geef de fingerprint-ID:"
-  read OCI_fingerprint_input
-  export OCI_fingerprint_input
   sudo cp /home/$USER/OCI.pem /home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem
 else
   echo "Het benodigde bestand OCI.pem werkt niet"
