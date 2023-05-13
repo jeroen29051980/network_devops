@@ -3,7 +3,6 @@
   hosts: all
   become: yes
 
-  tasks:
   - include_tasks: docker_deploy.yaml
   - include_tasks: ufw_Ann.yaml
   - include_tasks: webserver_Ann.yaml
