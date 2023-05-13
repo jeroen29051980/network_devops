@@ -7,7 +7,7 @@ Op voorwaarde dat git geïnstalleerd is op het host-systeem
 
 > apt-get install git
 
-> git clone https://github.com/jeroen29051980/DEVOPS_PROJ.git && > bash ./DEVOPS_PROJ/DEVOps.sh
+> git clone https://github.com/jeroen29051980/DEVOPS_PROJ.git && bash ./DEVOPS_PROJ/DEVOps.sh
 
 Voor de goede werking van dit script is het tevens noodzakelijk dat er een bestand bestaat in de root-folder van de gebruiker \n
 met de naam OCI.pem.
