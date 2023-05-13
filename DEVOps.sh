@@ -33,6 +33,8 @@ printf " > Klaar! \n"
 
 if [[ $(which terraform) != "/snap/bin/terraform" ]]; then
     sudo snap install terraform --classic
+else
+  echo "Terraform was reeds geïnstalleerd"
 fi
 
 DIRECTORY=/home/$USER/DEVOPS_PROJ
