@@ -1,0 +1,24 @@
+--- 
+- name: set up and deploy docker Nextcloud
+  hosts: MainVM
+  become: true
+  tasks: 
+    - name: ensure docker is at the latest version
+      apt:
+        name: docker
+        state: latest
+    - name: start docker
+      service: 
+        name: docker
+        state: started
+        enabled: yes
+    -name: deploy docker
+      docker_container:
+        name: Nextcloud
+        image: nextcloud
+        ports:
+          - "8080:80"
+        volumes:
+          - nextcloud:/var/www/html
+          - /nc_data:/var/www/html/data
+        restart_policy: always
