@@ -2,9 +2,10 @@
 - name: Installation main
   hosts: all
   become: yes
-
-  - include_tasks: docker_deploy.yaml
-  - include_tasks: ufw_Ann.yaml
-  - include_tasks: webserver_Ann.yaml
-  - include_tasks: samba.yaml
-  - include tasks: backup2VM.yaml  
+  
+  tasks:
+    - include: docker_deploy.yaml
+    - include: ufw_Ann.yaml
+    - include: webserver_Ann.yaml
+    - include: samba.yaml
+    - include: backup2VM.yaml  
