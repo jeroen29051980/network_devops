@@ -31,7 +31,7 @@ while kill -0 $PID 2> /dev/null; do
 done
 printf " > Klaar! \n"
 
-if [ -command $(which terraform) != "/snap/bin/terraform" ]; then
+if [[ $(which terraform) != "/snap/bin/terraform" ]]; then
     sudo snap install terraform --classic
 fi
 
