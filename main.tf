@@ -24,15 +24,6 @@ locals {
   }
 }
 
-provider "oci" {
-  tenancy_ocid     = var.tenancy_ocid
-  user_ocid        = var.user_ocid
-  fingerprint      = "52:5d:08:ce:82:b4:25:2b:27:02:6d:e7:db:4f:7e:7e"
-  private_key_path = "/home/$USER/DEVOPS_PROJ/files/KEYS/OCI.pem"
-  region           = "eu-amsterdam-1"
-}
-
-
 terraform {
   required_providers {
     oci = {
@@ -40,6 +31,13 @@ terraform {
       version = ">= 4.0.0"
     }
   }
+}
+provider "oci" {
+  tenancy_ocid     = var.tenancy_ocid
+  user_ocid        = var.user_ocid
+  fingerprint      = "52:5d:08:ce:82:b4:25:2b:27:02:6d:e7:db:4f:7e:7e"
+  private_key_path = "/home/jeroen/DEVOPS_PROJ/files/KEYS/OCI.pem"
+  region           = "eu-amsterdam-1"
 }
 
 data "oci_identity_availability_domains" "availability_domains" {
@@ -95,7 +93,8 @@ resource "oci_core_security_list" "TerraformedVM" {
 
 resource "oci_core_internet_gateway" "internet_gateway" {
   compartment_id = var.tenancy_ocid
-  vcn_id         = oci_core_vcn.vcn.id
+  vcn_id         = oci_core_vcn.vcn.id  ingress_security_rules {  
+  }
 }
 
 resource "oci_core_route_table" "internet" {
@@ -124,8 +123,8 @@ resource "oci_core_subnet" "subnet" {
 
 data "oci_core_images" "ubuntu" {
   compartment_id           = var.tenancy_ocid
-  operating_system         = "Canonical"
-  operating_system_version = "Ubuntu 22.04"
+  operating_system         = "Canonical Ubuntu"
+  operating_system_version = "22.04"
   shape                    = var.vm_shape
 }
 
@@ -159,11 +158,13 @@ resource "time_sleep" "wait" {
 }
 
 resource "null_resource" "generate-inventory" {
+  command = <<-EOT
+  echo [DEVOPS] >> inventory
+  EOT
   for_each = local.instances
   provisioner "local-exec" {
     command = <<-EOT
-      echo [New-Servers] >> inventory
-      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=opc ansible_ssh_private_key_file=/tmp/sshkey >> inventory
+      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/sshkey >> inventory
     EOT
   }
   depends_on = [time_sleep.wait]
@@ -171,7 +172,7 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory install-httpd.yml"
+    command = "ansible-playbook -i inventory install.yml"
   }
   depends_on = [null_resource.generate-inventory]
 }
