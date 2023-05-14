@@ -85,6 +85,42 @@ resource "oci_core_security_list" "TerraformedVM" {
       min = 443
     }
   }
+    ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 8080
+      min = 8080
+    }
+  }
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 8443
+      min = 8443
+    }
+  }
+    ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 139
+      min = 139
+    }
+  }
+  ingress_security_rules {
+    source      = "0.0.0.0/0"
+    source_type = "CIDR_BLOCK"
+    protocol    = "6" # TCP
+    tcp_options {
+      max = 445
+      min = 445
+    }
+  }
   egress_security_rules {
     destination  = "0.0.0.0/0"
     protocol    = "all"
@@ -172,7 +208,10 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory install.yml"
+    command = "ansible-playbook -i inventory docker_deploy.yaml"
+    command = "ansible-playbook -i inventory ufw.yaml"
+    command = "ansible-playbook -i inventory samba.yaml"
+    command = "ansible-playbook -i inventory backup2VM.yaml
   }
   depends_on = [null_resource.generate-inventory]
 }
