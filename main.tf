@@ -130,7 +130,7 @@ resource "oci_core_security_list" "TerraformedVM" {
 resource "oci_core_internet_gateway" "internet_gateway" {
   compartment_id = var.tenancy_ocid
   vcn_id         = oci_core_vcn.vcn.id  ingress_security_rules {  
-  }
+}
 }
 
 resource "oci_core_route_table" "internet" {
