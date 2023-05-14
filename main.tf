@@ -197,7 +197,7 @@ resource "null_resource" "generate-inventory" {
   for_each = local.instances
   provisioner "local-exec" {
     command = <<-EOT
-      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/sshkey >> inventory
+      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/sshkey host_key_checking=false >> inventory
     EOT
   }
   depends_on = [time_sleep.wait]
@@ -205,7 +205,7 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i inventory docker_deploy.yaml"
+    command = "ansible-playbook -i DEVOPS_PROJ/inventory DEVOPS_PROJ/playbook/install.yaml"
   }
   depends_on = [null_resource.generate-inventory]
 }

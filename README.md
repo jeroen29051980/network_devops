@@ -50,5 +50,8 @@ TESTING: opzetten VM'S op Oracle Cloud met terraform en eventuele HA voor 2 mach
 
 IN PROGRESS: configureren van de playbooks - centralisatie gebeurt in install.yaml waar alle playbooks worden aangeroepen.
 
-MAYBE NESCESSARY: aanmaken van de diverse configuratiebestanden voor verschillende toepassingen op de client-machines
+NOT NESCESSARY: aanmaken van de diverse configuratiebestanden voor verschillende toepassingen op de client-machines
 
+Toegevoegd in terraform script: host_key_checking=false > Dit vermijd dat er tijdens de initiële uitvoering van het Ansible een
+
+vertraging voorkomt voor een authenticatiecheck van de client-machine
