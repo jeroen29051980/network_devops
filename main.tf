@@ -194,9 +194,6 @@ resource "time_sleep" "wait" {
 }
 
 resource "null_resource" "generate-inventory" {
-  command = <<-EOT
-  echo [DEVOPS] >> inventory
-  EOT
   for_each = local.instances
   provisioner "local-exec" {
     command = <<-EOT
