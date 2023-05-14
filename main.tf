@@ -211,7 +211,7 @@ resource "null_resource" "execute-playbook" {
     command = "ansible-playbook -i inventory docker_deploy.yaml"
     command = "ansible-playbook -i inventory ufw.yaml"
     command = "ansible-playbook -i inventory samba.yaml"
-    command = "ansible-playbook -i inventory backup2VM.yaml
+    command = "ansible-playbook -i inventory backup2VM.yaml"
   }
   depends_on = [null_resource.generate-inventory]
 }
