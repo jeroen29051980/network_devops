@@ -10,7 +10,7 @@
         state: latest
         update_cache: true
 
-    - name: ensure docker is at the latest version
+    - name: Install all dependencies for Docker-ce
       apt:
         pkg:
           - apt-transport-https
