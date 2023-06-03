@@ -205,7 +205,7 @@ resource "null_resource" "generate-inventory" {
 resource "null_resource" "execute-playbook" {
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i DEVOPS_PROJ/inventory DEVOPS_PROJ/playbook/install.yaml"
+    command = "ansible-playbook -i /home/jeroen/DEVOPS_PROJ/inventory /home/jeroen/DEVOPS_PROJ/playbook/install.yaml"
   }
   depends_on = [null_resource.generate-inventory]
 }
