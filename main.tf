@@ -197,7 +197,7 @@ resource "null_resource" "generate-inventory" {
   for_each = local.instances
   provisioner "local-exec" {
     command = <<-EOT
-      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/sshkey host_key_checking=false >> inventory
+      echo ${oci_core_instance.TerraformedVM[each.key].display_name} ansible_host=${oci_core_instance.TerraformedVM[each.key].public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/tmp/sshkey ansible_ssh_common_args='-o StrictHostKeyChecking=no' >> inventory
     EOT
   }
   depends_on = [time_sleep.wait]
