@@ -43,7 +43,7 @@
       pip:
         name: docker
 
-    - name: deploy docker
+    - name: deploy Nextcloud
       docker_container:
         name: Nextcloud
         image: nextcloud
