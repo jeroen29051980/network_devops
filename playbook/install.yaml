@@ -153,32 +153,31 @@
       hour: "22"
       job: "rsync -ahvAE --delete /nc_data ubuntu@{{ ip_address }}:/nc_data_backup "
 
--/**
-   name: mount data-volume
-    hosts: MainVM
-    become: yes
-    vars:
-      uri: "//DataVM/nc_data"
-      #username: "example@domain"
-      #password: "password"
-      mountpoint: "/nc_data"
-    tasks:
-      - name: utility present
-        ansible.builtin.package:
-          name: cifs-utils
-          state: present
-  - name: check mountpoint exist
-      ansible.builtin.file:
-        path: "{{ mountpoint }}"
-        state: directory
-        mode: '0755'
-        owner: root
-        group: root
-  - name: Mount network share
-      ansible.posix.mount:
-        src: "{{ uri }}"
-        path: "{{ mountpoint }}"
-        fstype: cifs
-        #opts: 'username={{ username }},password={{ password }}'
-        state: mounted
-*/
+#
+#   name: mount data-volume
+#    hosts: MainVM
+#    become: yes
+#    vars:
+#      uri: "//DataVM/nc_data"
+#      username: "example@domain"
+#      password: "password"
+#      mountpoint: "/nc_data"
+#    tasks:
+#      - name: utility present
+#        ansible.builtin.package:
+#          name: cifs-utils
+#          state: present
+#  - name: check mountpoint exist
+#      ansible.builtin.file:
+#        path: "{{ mountpoint }}"
+#        state: directory
+#        mode: '0755'
+#        owner: root
+#        group: root
+#  - name: Mount network share
+#      ansible.posix.mount:
+#        src: "{{ uri }}"
+#        path: "{{ mountpoint }}"
+#        fstype: cifs
+#        #opts: 'username={{ username }},password={{ password }}'
+#        state: mounted
